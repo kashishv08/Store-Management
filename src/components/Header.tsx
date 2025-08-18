@@ -31,8 +31,8 @@ function Header() {
   };
 
   return (
-    <div>
-      <nav className="bg-gray-800 text-white px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap justify-between items-center gap-4">
+    <div className="relative">
+      <nav className="fixed top-0 z-50 w-full bg-gray-800 shadow-md text-white px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap justify-between items-center gap-4">
         <Link href="/">
           <div className="text-lg sm:text-xl font-bold flex items-center gap-2">
             <img

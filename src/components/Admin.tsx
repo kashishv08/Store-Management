@@ -26,9 +26,9 @@ function Admin() {
 
       <div
         className={`
-          fixed top-0 right-0 h-full bg-[#1F2937] p-4 shadow-inner
+          fixed  right-0 h-full bg-[#1F2937] p-4 shadow-inner
           w-64 md:relative md:w-[30%] transition-transform duration-300 mt-[10px]
-          ${sidebarOpen ? "translate-x-0 " : "translate-x-full"}
+          ${sidebarOpen ? "translate-x-0 top-11" : "translate-x-full top-20"}
           md:translate-x-0
           flex flex-col
         `}
