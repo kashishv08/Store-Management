@@ -8,7 +8,7 @@ import React, { ReactNode } from "react";
 import { User } from "../../../generated/prisma";
 
 async function layout({ children }: { children: ReactNode }) {
-  const user = await getUserFromCookie();
+  const user = (await getUserFromCookie()) as userNoPass;
   if (!user) redirect("/login");
   //   console.log(user);
 

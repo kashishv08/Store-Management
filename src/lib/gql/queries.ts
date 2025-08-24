@@ -87,3 +87,17 @@ export const FILTER_USER = gql`
     }
   }
 `;
+
+export const CURR_USER = gql`
+  query Query {
+    currUser {
+      id
+      name
+      username
+      email
+      password
+      role
+      avatar
+    }
+  }
+`;

@@ -12,7 +12,7 @@ import {
 import React, { useState } from "react";
 import { User } from "../../../generated/prisma";
 import { FaEdit } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 function EditUserByAdmin({ user }: { user: User }) {
   const [name, setName] = useState(user.name || "");
@@ -21,6 +21,7 @@ function EditUserByAdmin({ user }: { user: User }) {
   const [password, setPassword] = useState(user.password || "");
   const [role, setRole] = useState<string>(user.role || "staff");
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleAddUser = async () => {
     try {
@@ -36,8 +37,9 @@ function EditUserByAdmin({ user }: { user: User }) {
       });
       console.log(editUser);
       if (editUser.updateUserByAdmin) {
+        // window.location.reload();
+        alert("User Edited Successfully");
         router.refresh();
-        // alert("User Edited Successfully");
       } else {
         alert("Updation failed");
       }

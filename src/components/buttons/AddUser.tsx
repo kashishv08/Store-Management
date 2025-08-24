@@ -54,7 +54,9 @@ function AddUser() {
     <div>
       <Dialog.Root>
         <Dialog.Trigger>
-          <IoPersonAdd />
+          <Button variant="solid" color="indigo" style={{ cursor: "pointer" }}>
+            <IoPersonAdd size={17} />
+          </Button>
         </Dialog.Trigger>
 
         <Dialog.Content maxWidth="450px">

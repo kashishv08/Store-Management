@@ -45,7 +45,7 @@ function AddProduct() {
     <div>
       <Dialog.Root>
         <Dialog.Trigger>
-          <button className="inline-flex border p-1 border-white rounded-2xl bg-blue-900 gap-2 cursor-pointer">
+          <button className="px-3 inline-flex border p-1 border-white rounded-2xl bg-blue-900 gap-2 cursor-pointer">
             <BiCartAdd size={23} />
             <span className="hidden md:block">Product</span>
           </button>
