@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { UserContext } from "../context/user-context";
 import AddUser from "./AddUser";
 import { ALL_USER, FILTER_USER } from "@/lib/gql/queries";
+import { IoMdSearch } from "react-icons/io";
 
 function UserList() {
   const { user } = useContext(UserContext);
@@ -70,9 +71,9 @@ function UserList() {
       {loading ? (
         <p>loading...</p>
       ) : (
-        <div className="overflow-y-auto scrollbar-hide h-[500px] w-[100%] pb-[20px]">
-          <div className="w-full flex flex-col gap-3 pb-4">
-            {/* Header */}
+        <div className="w-full flex flex-col gap-3 h-full">
+          {/* Sticky Header + Search */}
+          <div className="sticky top-0 z-10">
             <div className="flex justify-between items-center">
               <Text size="3" weight="bold" className="text-white">
                 Team Members{" "}
@@ -80,16 +81,19 @@ function UserList() {
               </Text>
               {user?.role === "admin" && <AddUser />}
             </div>
-            <hr />
+            <hr className="my-2" />
 
-            {/* Search & Filter */}
             <div className="flex justify-between">
               <TextField.Root
                 className="flex max-w-sm"
                 placeholder="Search user..."
                 value={inp}
                 onChange={(e) => setInp(e.target.value)}
-              />
+              >
+                <TextField.Slot>
+                  <IoMdSearch height="16" width="16" />
+                </TextField.Slot>
+              </TextField.Root>
               <Select.Root defaultValue="all" onValueChange={setRole}>
                 <Select.Trigger className="mt-1" />
                 <Select.Content>
@@ -101,12 +105,14 @@ function UserList() {
                 </Select.Content>
               </Select.Root>
             </div>
+          </div>
 
-            {/* User Cards */}
+          {/* Scrollable User List */}
+          <div className="overflow-y-auto scrollbar-hide pb-20">
             {userList.map((val) => (
               <Card
                 key={val.id}
-                className="bg-gray-800 p-3 rounded-xl transition-all cursor-pointer"
+                className="bg-gray-800 p-3 rounded-xl transition-all cursor-pointer my-2"
               >
                 <Flex
                   gap="3"

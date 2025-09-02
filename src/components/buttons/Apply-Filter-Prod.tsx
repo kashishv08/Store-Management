@@ -14,6 +14,7 @@ import { useState } from "react";
 import { TbFilterHeart } from "react-icons/tb";
 import { Product } from "../../../generated/prisma";
 import { FILTER_PROD } from "@/lib/gql/queries";
+import { IoMdSearch } from "react-icons/io";
 
 function ApplyFilter({
   setProducts,
@@ -46,7 +47,11 @@ function ApplyFilter({
           onKeyDown={(e) => {
             if (e.key === "Enter") handleFilter();
           }}
-        ></TextField.Root>
+        >
+          <TextField.Slot>
+            <IoMdSearch height="16" width="16" />
+          </TextField.Slot>
+        </TextField.Root>
 
         <Dialog.Root>
           <Dialog.Trigger>
