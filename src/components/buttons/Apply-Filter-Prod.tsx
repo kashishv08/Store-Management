@@ -21,7 +21,7 @@ function ApplyFilter({
 }: {
   setProducts: (value: Product[]) => void;
 }) {
-  const [cat, setCat] = useState("");
+  const [cat, setCat] = useState("others");
   const [order, setOrder] = useState("asc");
   const [inp, setInp] = useState("");
 
@@ -38,7 +38,7 @@ function ApplyFilter({
   };
   return (
     <Box className="w-full flex items-center gap-4">
-      <Flex direction="row" gap="2" className="m-[10px]">
+      <Flex direction="row" gap="2" className="mr-[10px] mt-[10px]">
         <TextField.Root
           className="flex-1 max-w-sm"
           placeholder="Search products..."
@@ -85,7 +85,7 @@ function ApplyFilter({
                       <Select.Item value="clothing">Clothing</Select.Item>
                       <Select.Item value="furniture">Furniture</Select.Item>
                       <Select.Item value="decor">Decor</Select.Item>
-                      <Select.Item value="others">Others</Select.Item>
+                      <Select.Item value="others">All</Select.Item>
                     </Select.Group>
                   </Select.Content>
                 </Select.Root>

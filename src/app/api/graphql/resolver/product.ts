@@ -158,7 +158,7 @@ export const filterProd = async (
 ) => {
   const prod = await prismaClient.product.findMany({
     where: {
-      ...(args.category && { category: args.category }),
+      ...(args.category != "others" ? { category: args.category } : undefined),
       title: {
         contains: args.input,
         mode: "insensitive",

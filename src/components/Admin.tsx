@@ -5,8 +5,8 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import AllProducts from "./AllProducts";
 import UserList from "./buttons/MembersList";
 
-// const UserList = React.lazy(() => import("./buttons/MembersList"));
 // const AllProducts = React.lazy(() => import("./AllProducts"));
+// const UserList = React.lazy(() => import("./buttons/MembersList"));
 
 function Admin() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,7 +23,7 @@ function Admin() {
         }
       > */}
       <button
-        className="md:hidden absolute top-27 right-0 z-50 text-white p-2 rounded-lg shadow-lg mr-[10px]"
+        className="md:hidden absolute top-24 right-0 z-50 text-white p-2 rounded-lg shadow-lg mr-[10px]"
         onClick={() => setSidebarOpen(true)}
       >
         <HiOutlineMenu
@@ -32,21 +32,21 @@ function Admin() {
         />
       </button>
 
-      <div className="md:w-[70%] h-full min-h-0 overflow-y-auto scrollbar-hide">
+      <div className="md:w-[70%] h-full overflow-y-auto scrollbar-custom">
         <AllProducts />
       </div>
 
       <div
         className={`
-          fixed right-0 h-full bg-[#1F2937] p-4 shadow-inner
-          w-64 md:relative md:w-[30%] transition-transform duration-300 mt-[10px]
-          ${sidebarOpen ? "translate-x-0 top-15" : "translate-x-full top-20"}
-          md:translate-x-0
-          flex flex-col
-        `}
+            fixed right-0 h-full bg-[#1F2937] p-4 shadow-inner
+            w-64 md:relative md:w-[30%] transition-transform duration-300 mt-[10px]
+            ${sidebarOpen ? "translate-x-0 top-15" : "translate-x-full top-20"}
+            md:translate-x-0
+            flex flex-col overflow-y-auto scrollbar-custom
+          `}
       >
         <button
-          className="md:hidden mb-4 text-white flex items-center gap-1"
+          className="md:hidden mb-4 text-white flex items-center gap-1 sticky top-0"
           onClick={() => setSidebarOpen(false)}
         >
           <MdArrowBackIosNew /> Close

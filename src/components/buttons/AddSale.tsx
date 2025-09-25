@@ -20,8 +20,10 @@ function AddSale({ product }: { product: Product }) {
     }
 
     try {
-      if (!quant) {
+      if (!quant || quant <= "0") {
         // setError("Add Quantity to add Sale");
+        alert("Enter valid quantity");
+        setQuant("");
         return;
       }
       const data = await gqlClient.request(CREATE_SALE, {

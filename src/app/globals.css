@@ -1,20 +1,27 @@
 @import "tailwindcss";
 @import "@radix-ui/themes/styles.css";
 
-/* Hide scrollbar but keep scroll functionality */
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+/* Default scrollbar style */
+.scrollbar-custom {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #1f2937 transparent; /* track color */
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px; /* scrollbar thickness */
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent; /* track background */
+  margin: 10px; /* add margin around scrollbar */
 }
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #1f2937;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.scrollbar-custom:hover {
+  scrollbar-color: #5e6062 transparent; /* lighter gray */
 }

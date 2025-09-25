@@ -14,12 +14,29 @@ interface EditOwnProfileProps {
 
 function EditOwnProfile({ open, setOpen, user }: EditOwnProfileProps) {
   const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email);
-  const [username, setUsername] = useState(user?.username);
+  const [email, setEmail] = useState(user?.email || "");
+  const [username, setUsername] = useState(user?.username || "");
   const [avatar, setAvatar] = useState(user?.avatar || "");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!username.trim()) newErrors.username = "Username is required";
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!avatar.trim()) newErrors.avatar = "Avatar URL is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleEditProfile = async () => {
+    if (!validate()) return; // stop if validation fails
+
     try {
       const editUser: { updateProfile: userNoPass } = await gqlClient.request(
         EDIT_PROFILE,
@@ -31,10 +48,10 @@ function EditOwnProfile({ open, setOpen, user }: EditOwnProfileProps) {
           avatar,
         }
       );
-      console.log(editUser);
+
       if (editUser.updateProfile) {
         router.refresh();
-        setOpen(!open);
+        setOpen(false);
       } else {
         alert("Edit failed");
       }
@@ -62,7 +79,9 @@ function EditOwnProfile({ open, setOpen, user }: EditOwnProfileProps) {
               onChange={(e) => setName(e.target.value)}
               value={name}
             />
+            {errors.name && <Text color="red">{errors.name}</Text>}
           </label>
+
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Username
@@ -72,7 +91,9 @@ function EditOwnProfile({ open, setOpen, user }: EditOwnProfileProps) {
               onChange={(e) => setUsername(e.target.value)}
               value={username}
             />
+            {errors.username && <Text color="red">{errors.username}</Text>}
           </label>
+
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Email
@@ -82,7 +103,9 @@ function EditOwnProfile({ open, setOpen, user }: EditOwnProfileProps) {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
+            {errors.email && <Text color="red">{errors.email}</Text>}
           </label>
+
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Avatar
@@ -93,12 +116,13 @@ function EditOwnProfile({ open, setOpen, user }: EditOwnProfileProps) {
               onChange={(e) => setAvatar(e.target.value)}
               value={avatar}
             />
+            {errors.avatar && <Text color="red">{errors.avatar}</Text>}
           </label>
         </Flex>
 
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>
-            <Button variant="soft" color="gray" onClick={() => setOpen(!open)}>
+            <Button variant="soft" color="gray" onClick={() => setOpen(false)}>
               Cancel
             </Button>
           </Dialog.Close>

@@ -2,7 +2,7 @@
 import { DEL_PRODUCT } from "@/lib/gql/mutation";
 import { gqlClient } from "@/lib/service/gql";
 import { Button } from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { UserContext } from "../context/user-context";
 import { MdDeleteOutline } from "react-icons/md";
@@ -18,6 +18,7 @@ function DeleteProd({ id }: { id: string }) {
       id,
     });
     if (delProd.deleteProduct) {
+      redirect("/");
       router.refresh();
     } else {
       alert(":/");

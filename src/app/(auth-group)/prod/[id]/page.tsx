@@ -34,7 +34,7 @@ export default async function page({ params }: { params: p }) {
     }) || [];
   // console.log(chartData);
 
-  // Step 1: get aggregated sales per day (your existing logic)
+  // Step 1: get aggregated sales per day
   const aggregated: { date: string; quantity: number }[] = [];
   chartData.forEach((val) => {
     const sale = aggregated.find((v) => v.date === val.date);

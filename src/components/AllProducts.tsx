@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   ScrollArea,
+  Spinner,
   Text,
 } from "@radix-ui/themes";
 import Link from "next/link";
@@ -20,43 +21,54 @@ import { UserContext } from "./context/user-context";
 function AllProducts() {
   const { user } = useContext(UserContext);
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleProd = async () => {
-      // setLoading(true);
       const data: { getAllProd: Product[] } = await gqlClient.request(ALL_PROD);
       const prod = data?.getAllProd || [];
       setProducts(prod);
-      // setLoading(false);
+      setLoading(false);
     };
     handleProd();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="text-white min-h-screen w-full justify-center items-center ml-[50%] mt-[40%]">
+        <Spinner size="3" />
+      </div>
+    );
+  }
+
   return (
-    <>
-      {loading ? (
-        <div className="mt-23">{"loading..."}</div>
-      ) : (
-        <div
-          className="w-full p-4 mt-23 overflow-y-auto scrollbar-hide"
-          style={{ maxHeight: "100vh" }}
-        >
-          <div className="flex items-center mb-3">
-            <h2 className="text-white text-1xl font-bold mr-[20px]">
-              All Products
-            </h2>
-            {(user?.role === "admin" || user?.role === "manager") && (
-              <AddProduct />
-            )}
-          </div>
-          <hr />
+    <div className="w-full flex flex-col gap-3 h-full relative p-4">
+      <div className="sticky top-23">
+        <div className="flex items-center mb-3">
+          <h2 className="text-white text-1xl font-bold mr-[20px]">
+            All Products
+          </h2>
+          {(user?.role === "admin" || user?.role === "manager") && (
+            <AddProduct products={products} setProducts={setProducts} />
+          )}
+        </div>
+        <hr />
+        <ApplyFilter setProducts={setProducts} />
+      </div>
 
-          <div>
-            <ApplyFilter setProducts={setProducts} />
+      <div className="overflow-y-auto pb-20 mt-20 scrollbar-custom">
+        {products.length === 0 ? (
+          <div className="flex flex-col items-center justify-center mt-20 text-gray-400">
+            <Text size="4" className="text-gray-400">
+              No products found.
+            </Text>
+            {user?.role === "admin" || user?.role === "manager" ? (
+              <Text size="3" className="text-gray-400 mt-2">
+                Click "Add Product" to add new products.
+              </Text>
+            ) : null}
           </div>
-
-          {/* Grid with scroll */}
+        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((val) => (
               <Card
@@ -73,7 +85,6 @@ function AllProducts() {
                   </div>
                 </Link>
 
-                {/* Product Info */}
                 <Box className="p-3 flex flex-col gap-1 flex-grow">
                   <Flex justify="between" align="center">
                     <Heading size="5" className="text-white truncate">
@@ -107,9 +118,9 @@ function AllProducts() {
               </Card>
             ))}
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 }
 
