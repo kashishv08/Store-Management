@@ -29,22 +29,43 @@ function AddUser({ userList, setUserList }) {
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!name.trim()) newErrors.name = "Name is required";
-    if (!username.trim()) newErrors.username = "Username is required";
-
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      newErrors.email = "Enter a valid email";
+    // Name: only alphabets + spaces
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+      newErrors.name = "Name must contain only alphabets";
     }
 
+    // Username: must start with a letter, alphanumeric only, no emojis
+    if (!username.trim()) {
+      newErrors.username = "Username is required";
+    } else if (!/^[A-Za-z][A-Za-z0-9]*$/.test(username)) {
+      newErrors.username =
+        "Username must start with a letter and contain only alphanumeric characters (no emojis)";
+    }
+
+    // Email: must be Gmail only, end with .com, no emojis
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[A-Za-z0-9._%+-]+@gmail\.com$/.test(email)) {
+      newErrors.email =
+        "Enter a valid Gmail address (must end with @gmail.com, no emojis)";
+    }
+
+    // Password: at least 6 characters, ASCII only (no emojis)
     if (!password.trim()) {
       newErrors.password = "Password is required";
     } else if (password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
+    } else if (!/^[\x00-\x7F]*$/.test(password)) {
+      newErrors.password =
+        "Password cannot contain emojis or non-ASCII characters";
     }
 
-    if (!role.trim()) newErrors.role = "Role is required";
+    // Role: required
+    if (!role.trim()) {
+      newErrors.role = "Role is required";
+    }
 
     return newErrors;
   };

@@ -74,7 +74,7 @@ function ApplyFilter({
                 >
                   Category
                 </Text>
-                <Select.Root defaultValue="others" onValueChange={setCat}>
+                <Select.Root onValueChange={setCat}>
                   <Select.Trigger className="mt-1" />
                   <Select.Content>
                     <Select.Group>
@@ -85,7 +85,7 @@ function ApplyFilter({
                       <Select.Item value="clothing">Clothing</Select.Item>
                       <Select.Item value="furniture">Furniture</Select.Item>
                       <Select.Item value="decor">Decor</Select.Item>
-                      <Select.Item value="others">All</Select.Item>
+                      <Select.Item value="others">others</Select.Item>
                     </Select.Group>
                   </Select.Content>
                 </Select.Root>

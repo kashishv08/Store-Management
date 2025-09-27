@@ -31,12 +31,67 @@ function EditProduct({ product }: { product: Product }) {
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!title.trim()) newErrors.title = "Title is required";
-    if (!desc.trim()) newErrors.desc = "Description is required";
-    if (!price || Number(price) <= 0) newErrors.price = "Price must be > 0";
-    if (!stock || Number(stock) <= 0) newErrors.stock = "Stock must be > 0";
-    if (!image.trim()) newErrors.image = "Image URL is required";
-    if (!cat.trim()) newErrors.cat = "Category is required";
+
+    // Title: required, at least 3 chars, not only numbers
+    if (!title.trim()) {
+      newErrors.title = "Title is required";
+    } else if (title.trim().length < 3) {
+      newErrors.title = "Title must be at least 3 characters";
+    } else if (/^\d+$/.test(title.trim())) {
+      newErrors.title = "Title cannot be only numbers";
+    }
+
+    // Description: required, at least 10 chars
+    if (!desc.trim()) {
+      newErrors.desc = "Description is required";
+    } else if (desc.trim().length < 10) {
+      newErrors.desc = "Description must be at least 10 characters";
+    }
+
+    // Price: required, positive number
+    if (price === "" || isNaN(Number(price))) {
+      newErrors.price = "Price must be a valid number";
+    } else if (Number(price) <= 0) {
+      newErrors.price = "Price must be greater than 0";
+    }
+
+    // Stock: required, positive integer
+    if (stock === "" || isNaN(Number(stock))) {
+      newErrors.stock = "Stock must be a valid number";
+    } else if (!Number.isInteger(Number(stock))) {
+      newErrors.stock = "Stock must be an integer";
+    } else if (Number(stock) <= 0) {
+      newErrors.stock = "Stock must be greater than 0";
+    }
+
+    // Image: required, must be valid URL
+    if (!image.trim()) {
+      newErrors.image = "Image URL is required";
+    } else {
+      try {
+        new URL(image.trim()); // Will throw if invalid
+      } catch {
+        newErrors.image = "Enter a valid URL for the image";
+      }
+    }
+
+    // Category: required, must be from allowed list
+    const allowedCategories = [
+      "electronics",
+      "beauty",
+      "food",
+      "accessories",
+      "clothing",
+      "furniture",
+      "decor",
+      "others",
+    ];
+    if (!cat.trim()) {
+      newErrors.cat = "Category is required";
+    } else if (!allowedCategories.includes(cat)) {
+      newErrors.cat = "Invalid category selected";
+    }
+
     return newErrors;
   };
 

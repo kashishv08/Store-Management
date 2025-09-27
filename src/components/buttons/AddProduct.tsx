@@ -1,7 +1,6 @@
 "use client";
 import { ADD_PROD } from "@/lib/gql/mutation";
 import { gqlClient } from "@/lib/service/gql";
-import { BiCartAdd } from "react-icons/bi";
 import {
   Button,
   Dialog,
@@ -10,11 +9,18 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import React, { useState } from "react";
-import { Product } from "../../../generated/prisma";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { BiCartAdd } from "react-icons/bi";
+import { Product } from "../../../generated/prisma";
 
-function AddProduct({ products, setProducts }) {
+function AddProduct({
+  products,
+  setProducts,
+}: {
+  products: Product[];
+  setProducts: (x: Product[]) => {};
+}) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [cat, setCat] = useState("others");
@@ -28,13 +34,70 @@ function AddProduct({ products, setProducts }) {
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!title.trim()) newErrors.title = "Title is required";
-    if (!desc.trim()) newErrors.desc = "Description is required";
-    if (!price || Number(price) <= 0)
+
+    // Title
+    if (!title.trim()) {
+      newErrors.title = "Title is required";
+    } else if (!/^[A-Za-z\s]+$/.test(title.trim())) {
+      newErrors.title = "Title must contain only alphabets";
+    } else if (/^\d+$/.test(title.trim())) {
+      newErrors.title = "Title cannot be only numbers";
+    }
+
+    // Description
+    if (!desc.trim()) {
+      newErrors.desc = "Description is required";
+    } else if (desc.trim().length < 10) {
+      newErrors.desc = "Description must be at least 10 characters";
+    } else if (!/^[\x00-\x7F]*$/.test(desc.trim())) {
+      newErrors.desc =
+        "Description cannot contain emojis or non-ASCII characters";
+    }
+
+    // Price
+    if (!price || isNaN(Number(price))) {
+      newErrors.price = "Price must be a valid number";
+    } else if (Number(price) <= 0) {
       newErrors.price = "Price must be greater than 0";
-    if (!stock || Number(stock) <= 0) newErrors.stock = "Stock must be > 0";
-    if (!image.trim()) newErrors.image = "Image URL is required";
-    if (!cat.trim()) newErrors.cat = "Category is required";
+    }
+
+    // Stock
+    if (!stock || isNaN(Number(stock))) {
+      newErrors.stock = "Stock must be a valid number";
+    } else if (!Number.isInteger(Number(stock))) {
+      newErrors.stock = "Stock must be an integer";
+    } else if (Number(stock) <= 0) {
+      newErrors.stock = "Stock must be greater than 0";
+    }
+
+    // Image
+    if (!image.trim()) {
+      newErrors.image = "Image URL is required";
+    } else {
+      try {
+        new URL(image.trim());
+      } catch {
+        newErrors.image = "Enter a valid URL for the image";
+      }
+    }
+
+    // Category
+    const allowedCategories = [
+      "electronics",
+      "beauty",
+      "food",
+      "accessories",
+      "clothing",
+      "furniture",
+      "decor",
+      "others",
+    ];
+    if (!cat.trim()) {
+      newErrors.cat = "Category is required";
+    } else if (!allowedCategories.includes(cat)) {
+      newErrors.cat = "Invalid category selected";
+    }
+
     return newErrors;
   };
 
@@ -56,10 +119,18 @@ function AddProduct({ products, setProducts }) {
 
     if (prod.addProduct) {
       setOpen(false);
-      setProducts((prev) => {
-        return [...prev, prod.addProduct];
-      });
-      // router.refresh();
+
+      // Clear form state
+      setTitle("");
+      setDesc("");
+      setCat("others");
+      setPrice("99.9");
+      setStock("1");
+      setImage("");
+      setErrors({});
+
+      setProducts((prev: Product[]) => [...prev, prod.addProduct]);
+      // router.refresh(); // optional
     } else {
       alert("Failed to add product.");
     }

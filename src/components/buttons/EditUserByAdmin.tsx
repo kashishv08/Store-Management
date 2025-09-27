@@ -38,20 +38,43 @@ function EditUserByAdmin({
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!name.trim()) newErrors.name = "Name is required";
-    else if (name.trim().length < 3)
+    // Name: only alphabets + spaces, min 3 chars, no emojis
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (name.trim().length < 3) {
       newErrors.name = "Name must be at least 3 characters";
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+      newErrors.name =
+        "Name must contain only alphabets (no numbers or emojis)";
+    }
 
-    if (!username.trim()) newErrors.username = "Username is required";
-    else if (username.trim().length < 3)
+    // Username: must start with letter, alphanumeric only, min 3 chars, no emojis
+    if (!username.trim()) {
+      newErrors.username = "Username is required";
+    } else if (username.trim().length < 3) {
       newErrors.username = "Username must be at least 3 characters";
+    } else if (!/^[A-Za-z][A-Za-z0-9]*$/.test(username)) {
+      newErrors.username =
+        "Username must start with a letter and contain only alphanumeric characters (no emojis)";
+    }
 
-    if (!email.trim()) newErrors.email = "Email is required";
-    else if (!emailRegex.test(email)) newErrors.email = "Invalid email format";
+    // Email: must be Gmail only, end with .com, no emojis
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[A-Za-z0-9._%+-]+@gmail\.com$/.test(email)) {
+      newErrors.email =
+        "Enter a valid Gmail address (must end with @gmail.com)";
+    }
 
-    if (!password.trim()) newErrors.password = "Password is required";
-    else if (password.trim().length < 6)
+    // Password: at least 6 chars, ASCII only (no emojis)
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+    } else if (password.trim().length < 6) {
       newErrors.password = "Password must be at least 6 characters";
+    } else if (!/^[\x00-\x7F]*$/.test(password)) {
+      newErrors.password =
+        "Password cannot contain emojis or non-ASCII characters";
+    }
 
     return newErrors;
   };
@@ -76,14 +99,19 @@ function EditUserByAdmin({
         }
       );
 
+      console.log("Mutation Response:", editUser);
       if (editUser.updateUserByAdmin) {
         setOpen(false);
         if (setUserList) {
-          setUserList((prev: User[]) =>
-            prev.map((u) =>
-              u.id === user.id ? { ...u, ...editUser.updateUserByAdmin } : u
-            )
-          );
+          setUserList((prev: User[]) => {
+            const updatedList = prev.map((u) =>
+              u.id === user.id
+                ? { ...u, name, username, email, password, role }
+                : u
+            );
+            console.log("Updated List:", updatedList);
+            return updatedList;
+          });
         }
       } else {
         alert("Updation failed ");
