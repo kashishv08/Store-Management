@@ -15,15 +15,22 @@ function page() {
     message?: string;
   }>({});
 
-  const handleLogin = async () => {
+  const fillDemoCredentials = () => {
+    setTimeout(() => {
+      handleLogin("demo@gmail.com", "demo123");
+    }, 2000);
+  };
+  const handleLogin = async (manualuser?: string, manualpassword?: string) => {
     setError({});
     setLoading(true);
+    const finalUser = manualuser || userCred;
+    const finalPass = manualpassword || password;
     try {
       const loginuser: {
         loginUser: User;
       } = await gqlClient.request(LOG_IN, {
-        userCred,
-        password,
+        userCred: finalUser,
+        password: finalPass,
       });
       console.log(loginuser);
       if (loginuser.loginUser) {
@@ -77,15 +84,26 @@ function page() {
           />
         </div>
 
-        <div className="mt-2 flex items-end">
+        <div className="mt-2 flex w-full justify-between">
           <Button
-            onClick={handleLogin}
+            onClick={() => handleLogin(userCred, password)}
+            style={{ width: "50%" }}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-6 py-2 transition-colors duration-200"
+            className="cursor-pointer w-[50%] bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-6 py-2 transition-colors duration-200"
           >
             <Text className="text-white">
               {loading ? "Logging in..." : "Login"}
             </Text>
+          </Button>
+
+          {/* NEW: Demo Login Button */}
+          <Button
+            type="button"
+            variant="soft" // Radix UI light style
+            onClick={fillDemoCredentials}
+            className="cursor-pointer"
+          >
+            <Text>Try Demo Account</Text>
           </Button>
         </div>
 
