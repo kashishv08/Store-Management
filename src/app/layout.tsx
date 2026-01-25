@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Header from "@/components/Header";
 import ThemeProvider from "@/components/context/theme-context-provider";
 import type { Metadata } from "next";
