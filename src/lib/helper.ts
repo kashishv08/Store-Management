@@ -1,7 +1,7 @@
 import { verifyToken } from "@/lib/service/jwt";
+import { prismaClient } from "@/lib/service/prisma";
+import { roleType } from "generated/prisma";
 import { cookies } from "next/headers";
-import { roleType } from "../../generated/prisma";
-import { prismaClient } from "./service/prisma";
 
 export type usertype = {
   id: string;
