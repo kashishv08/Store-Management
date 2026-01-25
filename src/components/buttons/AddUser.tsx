@@ -14,7 +14,12 @@ import { User } from "../../../generated/prisma";
 import { useRouter } from "next/navigation";
 import { IoPersonAdd } from "react-icons/io5";
 
-function AddUser({ userList, setUserList }) {
+interface AddUserProps {
+  userList: User[];
+  setUserList: React.Dispatch<React.SetStateAction<User[]>>;
+}
+
+function AddUser({ userList, setUserList }: AddUserProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");

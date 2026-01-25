@@ -19,7 +19,7 @@ function AddProduct({
   setProducts,
 }: {
   products: Product[];
-  setProducts: (x: Product[]) => {};
+  setProducts: (x: Product[] | ((prev: Product[]) => Product[])) => void;
 }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -128,7 +128,6 @@ function AddProduct({
       setStock("1");
       setImage("");
       setErrors({});
-
       setProducts((prev: Product[]) => [...prev, prod.addProduct]);
       // router.refresh(); // optional
     } else {
