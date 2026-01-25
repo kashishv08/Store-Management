@@ -10,7 +10,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import React, { useContext, useState } from "react";
-import { Product } from "../../../generated/prisma";
+import { Product } from "generated/prisma";
 import { UserContext } from "../context/user-context";
 import { MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation";

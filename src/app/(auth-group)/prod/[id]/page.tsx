@@ -6,7 +6,7 @@ import EditProduct from "@/components/buttons/EditProduct";
 import { ONE_PROD } from "@/lib/gql/queries";
 import { gqlClient } from "@/lib/service/gql";
 import { Badge, Card, Flex, Heading, Text } from "@radix-ui/themes";
-import { Product, Sale } from "../../../../../generated/prisma";
+import { Product, Sale } from "generated/prisma";
 
 type p = Promise<{ id: string }>;
 
@@ -24,9 +24,8 @@ export default async function page({ params }: { params: p }) {
   const chartData =
     prod.Sale?.map((s) => {
       const date = new Date(Number(s.createdAt));
-      const format = `${date.getDate()}-${
-        date.getMonth() + 1
-      }-${date.getFullYear()}`;
+      const format = `${date.getDate()}-${date.getMonth() + 1
+        }-${date.getFullYear()}`;
       return {
         date: format,
         quantity: s.quantity,
@@ -106,9 +105,8 @@ export default async function page({ params }: { params: p }) {
               <br /> <br />
               Stock: &nbsp;
               <Text
-                className={`font-semibold text-lg ${
-                  prod.stock > 0 ? "text-green-600" : "text-red-600"
-                }`}
+                className={`font-semibold text-lg ${prod.stock > 0 ? "text-green-600" : "text-red-600"
+                  }`}
               >
                 {prod.stock > 0 ? `${prod.stock} available` : "Out of stock"}
               </Text>

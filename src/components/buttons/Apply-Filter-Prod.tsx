@@ -12,9 +12,9 @@ import {
 } from "@radix-ui/themes";
 import { useState } from "react";
 import { TbFilterHeart } from "react-icons/tb";
-import { Product } from "../../../generated/prisma";
 import { FILTER_PROD } from "@/lib/gql/queries";
 import { IoMdSearch } from "react-icons/io";
+import { Product } from "generated/prisma";
 
 function ApplyFilter({
   setProducts,

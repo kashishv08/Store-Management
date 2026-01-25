@@ -10,10 +10,10 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
-import { User } from "../../../generated/prisma";
 import { FaEdit } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { ALL_USER } from "@/lib/gql/queries";
+import { User } from "generated/prisma";
 
 function EditUserByAdmin({
   user,

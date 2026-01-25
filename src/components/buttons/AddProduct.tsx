@@ -9,10 +9,10 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
+import { Product } from "generated/prisma";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BiCartAdd } from "react-icons/bi";
-import { Product } from "../../../generated/prisma";
 
 function AddProduct({
   products,

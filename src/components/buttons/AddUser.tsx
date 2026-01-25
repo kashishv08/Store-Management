@@ -9,8 +9,8 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
+import { User } from "generated/prisma";
 import React, { useState } from "react";
-import { User } from "../../../generated/prisma";
 import { useRouter } from "next/navigation";
 import { IoPersonAdd } from "react-icons/io5";
 

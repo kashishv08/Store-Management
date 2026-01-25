@@ -1,6 +1,6 @@
-import { prismaClient } from "@/lib/service/prisma";
-import { ProdCategory } from "../../../../../generated/prisma";
 import { getUserFromCookie } from "@/lib/helper";
+import { prismaClient } from "@/lib/service/prisma";
+import { ProdCategory } from "generated/prisma";
 
 export const addProduct = async (
   _: any,

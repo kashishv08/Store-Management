@@ -15,11 +15,11 @@ import {
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
-import { User } from "../../../generated/prisma";
 import { UserContext } from "../context/user-context";
 import AddUser from "./AddUser";
 import ConfirmDelete from "./DeleteUser";
 import EditUserByAdmin from "./EditUserByAdmin";
+import { User } from "generated/prisma";
 
 function UserList() {
   const { user } = useContext(UserContext);

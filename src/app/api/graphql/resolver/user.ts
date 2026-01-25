@@ -1,8 +1,8 @@
 import { getUserFromCookie } from "@/lib/helper";
 import { generateToken } from "@/lib/service/jwt";
 import { prismaClient } from "@/lib/service/prisma";
+import { roleType } from "generated/prisma";
 import { cookies } from "next/headers";
-import { roleType } from "../../../../../generated/prisma";
 
 export const loginUser = async (
   _: any,

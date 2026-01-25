@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import { getUserFromCookie } from "@/lib/helper";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
-import { User } from "../../../generated/prisma";
+import { User } from "generated/prisma";
 
 async function layout({ children }: { children: ReactNode }) {
   const user = (await getUserFromCookie()) as userNoPass;

@@ -1,7 +1,7 @@
 "use client";
 import { Theme } from "@radix-ui/themes";
+import { roleType } from "generated/prisma";
 import React, { createContext, ReactNode, useState } from "react";
-import { roleType, User } from "../../../generated/prisma";
 
 export type userNoPass = {
   id: string;

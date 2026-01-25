@@ -11,8 +11,9 @@
   "dependencies": {
     "@apollo/server": "^5.0.0",
     "@as-integrations/next": "^4.0.0",
-    "@prisma/client": "^6.13.0",
+    "@prisma/client": "6.19",
     "@radix-ui/themes": "^3.2.1",
+    "dotenv": "^17.2.3",
     "graphql-request": "^7.2.0",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.2",
@@ -27,10 +28,10 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^20",
+    "@types/node": "^20.19.30",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "prisma": "^6.13.0",
+    "prisma": "6.19",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

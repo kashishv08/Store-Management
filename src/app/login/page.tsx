@@ -5,7 +5,7 @@ import { gqlClient } from "@/lib/service/gql";
 import { Button, Card, Text, TextField } from "@radix-ui/themes";
 import Image from "next/image";
 import { useState } from "react";
-import { User } from "../../../generated/prisma";
+import { User } from "generated/prisma";
 
 function page() {
   const [password, setPassword] = useState("");

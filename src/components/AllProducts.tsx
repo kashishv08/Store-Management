@@ -13,10 +13,10 @@ import {
 } from "@radix-ui/themes";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
-import { Product } from "../../generated/prisma";
 import AddProduct from "./buttons/AddProduct";
 import ApplyFilter from "./buttons/Apply-Filter-Prod";
 import { UserContext } from "./context/user-context";
+import { Product } from "generated/prisma";
 
 function AllProducts() {
   const { user } = useContext(UserContext);

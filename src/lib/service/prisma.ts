@@ -1,5 +1,3 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "generated/prisma";
 
-export const prismaClient = new PrismaClient({
-    datasourceUrl: process.env.MONGODB_URL,
-});
+export const prismaClient = new PrismaClient();

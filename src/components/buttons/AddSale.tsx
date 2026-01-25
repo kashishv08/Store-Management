@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Product } from "../../../generated/prisma";
 import { gqlClient } from "@/lib/service/gql";
 import { CREATE_SALE } from "@/lib/gql/mutation";
 import { useRouter } from "next/navigation";
 import { Button, TextField } from "@radix-ui/themes";
 import { FaCirclePlus } from "react-icons/fa6";
+import { Product } from "generated/prisma";
 
 function AddSale({ product }: { product: Product }) {
   const [quant, setQuant] = useState("1");
