@@ -36,9 +36,10 @@ export const loginUser = async (
 
       cookie.set("newToken", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
         path: "/",
+        maxAge: 60 * 60 * 24 * 7,
       });
 
       return true;
