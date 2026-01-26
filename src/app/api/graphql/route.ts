@@ -62,8 +62,9 @@ function buildHeaders(origin: string) {
   const headers: Record<string, string> = {};
 
   if (
-    origin.startsWith("https://store-management-") &&
-    origin.endsWith(".vercel.app")
+    allowedOrigins.includes(origin) ||
+    (origin.startsWith("https://store-management-") &&
+      origin.endsWith(".vercel.app"))
   ) {
     headers["Access-Control-Allow-Origin"] = origin;
     headers["Access-Control-Allow-Credentials"] = "true";
