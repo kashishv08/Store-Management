@@ -34,7 +34,12 @@ export const loginUser = async (
         id: user.id,
       });
 
-      cookie.set("newToken", token);
+      cookie.set("newToken", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        path: "/",
+      });
 
       return true;
     } else {
