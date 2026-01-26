@@ -1,4 +1,4 @@
-import { getUserFromCookie } from "@/lib/helper";
+import { getUserFromCookie, usertype } from "@/lib/helper";
 import { generateToken } from "@/lib/service/jwt";
 import { prismaClient } from "@/lib/service/prisma";
 import { roleType } from "generated/prisma";
@@ -57,7 +57,7 @@ export const createUser = async (
   }
 ) => {
   try {
-    const userFromCookie = await getUserFromCookie();
+    const userFromCookie: usertype | null = await getUserFromCookie();
     if (!userFromCookie) return null;
 
     if (userFromCookie.role != "admin") return null;
@@ -83,7 +83,7 @@ export const updateUserByAdmin = async (
   }
 ) => {
   try {
-    const userFromCookie = await getUserFromCookie();
+    const userFromCookie: usertype | null = await getUserFromCookie();
     if (!userFromCookie) return false;
 
     if (userFromCookie.role !== "admin") return false;
@@ -113,7 +113,7 @@ export const RemoveMember = async (
   }
 ) => {
   try {
-    const userFromCookie = await getUserFromCookie();
+    const userFromCookie: usertype | null = await getUserFromCookie();
     if (!userFromCookie) return false;
 
     if (userFromCookie.role !== "admin") return false;
@@ -148,7 +148,7 @@ export const updateProfile = async (
   }
 ) => {
   try {
-    const userFromCookie = await getUserFromCookie();
+    const userFromCookie: usertype | null = await getUserFromCookie();
     if (!userFromCookie) return null;
 
     const updatedProfile = await prismaClient.user.update({
@@ -191,7 +191,7 @@ export const logout = async (
   }
 ) => {
   const cookie = await cookies();
-  const currUser = await getUserFromCookie();
+  const currUser: usertype | null = await getUserFromCookie();
   if (!currUser) return false;
 
   if (currUser.id !== args.id) return false;

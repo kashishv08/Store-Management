@@ -1,4 +1,4 @@
-import { getUserFromCookie } from "@/lib/helper";
+import { getUserFromCookie, usertype } from "@/lib/helper";
 import { prismaClient } from "@/lib/service/prisma";
 import { ProdCategory } from "generated/prisma";
 
@@ -36,7 +36,7 @@ export const editProduct = async (
     stock: number;
   }
 ) => {
-  const currUser = await getUserFromCookie();
+  const currUser: usertype | null = await getUserFromCookie();
   if (!currUser) return false;
 
   if (currUser.role == "staff") return false;
@@ -67,7 +67,7 @@ export const deleteProduct = async (
     id: string;
   }
 ) => {
-  const currUser = await getUserFromCookie();
+  const currUser: usertype | null = await getUserFromCookie();
   if (!currUser) return false;
 
   if (currUser.role == "staff") return false;
