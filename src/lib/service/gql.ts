@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
 
-export const gqlClient = new GraphQLClient("https://store-management-pink-one.vercel.app/api/graphql", {
+export const gqlClient = new GraphQLClient(process.env.NEXT_PUBLIC_URL + "/api/graphql", {
     credentials: "include",
 });
