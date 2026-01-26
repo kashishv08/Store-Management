@@ -61,7 +61,10 @@ const server = new ApolloServer({
 function buildHeaders(origin: string) {
   const headers: Record<string, string> = {};
 
-  if (allowedOrigins.includes(origin)) {
+  if (
+    origin.startsWith("https://store-management-") &&
+    origin.endsWith(".vercel.app")
+  ) {
     headers["Access-Control-Allow-Origin"] = origin;
     headers["Access-Control-Allow-Credentials"] = "true";
   }
@@ -72,6 +75,7 @@ function buildHeaders(origin: string) {
 
   return headers;
 }
+
 
 
 let serverStarted = false;
