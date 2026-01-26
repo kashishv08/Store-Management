@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import UserContextProvider, {
   userNoPass,
 } from "@/components/context/user-context";
