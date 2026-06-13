@@ -74,3 +74,19 @@ NEXTAUTH_URL=http://localhost:3000
 ---
 
 ## 📁 Project Structure
+src/
+
+├── app/             # Next.js App Router pages
+├── components/      # Reusable UI components (Radix UI)
+├── graphql/         # Queries, mutations, resolvers
+├── lib/             # JWT utils, auth helpers
+├── middleware/      # Route protection
+prisma/
+└── schema.prisma    # Database schema
+
+---
+
+## 👤 Author
+
+**Kashish Vashistha** · [LinkedIn](https://www.linkedin.com/in/kashish-vashistha) · [GitHub](https://github.com/kashishv08)
+
